@@ -1,5 +1,5 @@
 {
-  "name": "jupyter-vuedragable",
+  "name": "jupyter-vuedraggable",
   "version": "1.0.0",
   "description": "Jupyter widget for Vue.Draggable",
   "license": "MIT",
