@@ -1,6 +1,6 @@
 from traitlets import Unicode, Dict
 from ipyvue import VueWidget
-
+from ._version import semver
 
 class Draggable(VueWidget):
 
@@ -8,7 +8,7 @@ class Draggable(VueWidget):
 
     _model_module = Unicode('jupyter-vuedraggable').tag(sync=True)
 
-    _model_module_version = Unicode('^0.0.1').tag(sync=True)
+    _model_module_version = Unicode(semver).tag(sync=True)
 
     group = Dict().tag(sync=True)
 

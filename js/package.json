@@ -1,6 +1,6 @@
 {
   "name": "jupyter-vuedragable",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Jupyter widget for Vue.Draggable",
   "license": "MIT",
   "author": "Mario Buikhuizen, Maarten Breddels",
