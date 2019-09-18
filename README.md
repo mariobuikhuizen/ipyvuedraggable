@@ -1,29 +1,28 @@
+[![Version](https://img.shields.io/npm/v/jupyter-vuedraggable.svg)](https://www.npmjs.com/package/jupyter-vuedraggable)
+[![Version](https://img.shields.io/pypi/v/ipyvuedraggable.svg)](https://pypi.python.org/mariobuikhuizen/ipyvuedraggable)
+[![Conda Version](https://img.shields.io/conda/vn/conda-forge/ipyvuedraggable.svg)](https://anaconda.org/conda-forge/ipyvuedraggable)
+
 # ipyvuedraggable
 
 Jupyter widget based on [Vue.Draggable](https://github.com/SortableJS/Vue.Draggable).
 
 For examples see [Examples.ipynb](Examples.ipynb)
 
-## Installation
+Installation
+------------
 
-This library is based on development versions of some dependencies:
+To install use pip:
 
-| project | branch |
-|---------|--------|
-| [ipyvue](https://github.com/mariobuikhuizen/ipyvue.git) | experimental |
-| [ipyvuetify](https://github.com/mariobuikhuizen/ipyvuetify.git) | ipyvue |
+    $ pip install ipyvuedraggable
 
-    git clone -b experimental https://github.com/mariobuikhuizen/ipyvue.git
-    pip install -e ipyvue
-    jupyter nbextension install --py --symlink --sys-prefix ipyvue
-    jupyter nbextension enable --py --sys-prefix ipyvue
+Or conda:
 
-    git clone -b ipyvue https://github.com/mariobuikhuizen/ipyvuetify.git
-    pip install -e ipyvuetify
-    jupyter nbextension install --py --symlink --sys-prefix ipyvuetify
-    jupyter nbextension enable --py --sys-prefix ipyvuetify
+    $ conda install -c conda-forge ipyvuedraggable
 
-    git clone https://github.com/mariobuikhuizen/ipyvuedraggable.git
-    pip install -e ipyvuedraggable
-    jupyter nbextension install --py --symlink --sys-prefix ipyvuedraggable
-    jupyter nbextension enable --py --sys-prefix ipyvuedraggable
+For a development installation (requires npm),
+
+    $ git clone https://github.com/mariobuikhuizen/ipyvuedraggable.git
+    $ cd ipyvuedraggable
+    $ pip install -e .
+    $ jupyter nbextension install --py --symlink --sys-prefix ipyvuedraggable
+    $ jupyter nbextension enable --py --sys-prefix ipyvuedraggable

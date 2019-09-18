@@ -138,7 +138,7 @@ setup_args = {
         ('etc/jupyter/nbconfig/notebook.d', ['jupyter-vuedraggable.json'])
     ],
     'install_requires': [
-        'ipyvue>=0.1.0',
+        'ipyvue>=1.0.0,<2',
     ],
     'packages': find_packages(),
     'zip_safe': False,
