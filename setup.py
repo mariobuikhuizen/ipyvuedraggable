@@ -69,8 +69,8 @@ class NPM(Command):
     node_modules = os.path.join(node_root, 'node_modules')
 
     targets = [
-        os.path.join(here, 'ipyvuedraggable', 'static', 'extension.js'),
-        os.path.join(here, 'ipyvuedraggable', 'static', 'index.js')
+        os.path.join(here, 'nbextension', 'extension.js'),
+        os.path.join(here, 'nbextension', 'index.js')
     ]
 
     def initialize_options(self):
@@ -134,7 +134,9 @@ setup_args = {
     'long_description': LONG_DESCRIPTION,
     'include_package_data': True,
     'data_files': [
-        ('share/jupyter/nbextensions/jupyter-vuedraggable', glob.glob('ipyvuedraggable/static/*')),
+        ('share/jupyter/nbextensions/jupyter-vuedraggable', glob.glob('nbextension/*')),
+        ('share/jupyter/labextensions/jupyter-vuedraggable', glob.glob('labextension/package.json')),
+        ('share/jupyter/labextensions/jupyter-vuedraggable/static', glob.glob('labextension/static/*')),
         ('etc/jupyter/nbconfig/notebook.d', ['jupyter-vuedraggable.json'])
     ],
     'install_requires': [

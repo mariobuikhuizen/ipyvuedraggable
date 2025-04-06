@@ -1,5 +1,6 @@
 /* eslint camelcase: off */
 import { VueModel } from 'jupyter-vue';
+import { version } from "../package.json";
 
 export class DraggableModel extends VueModel {
     defaults() {
@@ -8,8 +9,7 @@ export class DraggableModel extends VueModel {
             ...{
                 _model_name: 'DraggableModel',
                 _model_module: 'jupyter-vuedraggable',
-                _view_module_version: '0.0.1',
-                _model_module_version: '0.0.1',
+                _model_module_version: version,
                 group: null,
                 tag: null,
                 component_data: null,
@@ -22,6 +22,6 @@ export class DraggableModel extends VueModel {
     }
 }
 
-VueModel.serializers = {
+DraggableModel.serializers = {
     ...VueModel.serializers,
 };

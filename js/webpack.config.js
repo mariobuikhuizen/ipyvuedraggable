@@ -23,7 +23,7 @@ module.exports = [
         entry: './lib/entrypoints/extension.js',
         output: {
             filename: 'extension.js',
-            path: path.resolve(__dirname, '..', 'ipyvuedraggable', 'static'),
+            path: path.resolve(__dirname, '..', 'nbextension'),
             libraryTarget: 'amd'
         },
         mode: 'production',
@@ -37,7 +37,7 @@ module.exports = [
         entry: './lib/entrypoints/notebook.js',
         output: {
             filename: 'index.js',
-            path: path.resolve(__dirname, '..', 'ipyvuedraggable', 'static'),
+            path: path.resolve(__dirname, '..', 'nbextension'),
             libraryTarget: 'amd'
         },
         devtool: 'source-map',

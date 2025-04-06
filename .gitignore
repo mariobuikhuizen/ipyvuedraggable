@@ -3,5 +3,6 @@ build
 lib
 node_modules
 *.egg-info
-/ipyvuedraggable/static
+/labextension
+/nbextension
 __pycache__
