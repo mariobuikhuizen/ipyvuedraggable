@@ -1,0 +1,132 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - v*
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "14.x"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install wheel jupyter-packaging "jupyterlab<4"
+
+      - name: Pack js
+        run: |
+          cd js
+          npm install
+          npm pack
+
+      - name: Build wheel
+        run: |
+          python setup.py sdist bdist_wheel
+      - name: Upload builds
+        uses: actions/upload-artifact@v4
+        with:
+          name: ipyvuedraggable-dist-${{ github.run_number }}
+          path: |
+            ./dist
+            ./js/*.tgz
+
+  test:
+    needs: [build]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: ipyvuedraggable-dist-${{ github.run_number }}
+
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install
+        run: pip install dist/*.whl
+
+      - name: Import
+        # do the import in a subdirectory, as after installation, files in de current directory are also imported
+        run: |
+          (mkdir test-install; cd test-install; python -c "from ipyvuedraggable import Draggable")
+
+  release-dry-run:
+    needs: [ test ]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: ipyvuedraggable-dist-${{ github.run_number }}
+
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "14.x"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Publish the NPM package
+        run: |
+          cd js
+          echo $PRE_RELEASE
+          if [[ $PRE_RELEASE == "true" ]]; then export TAG="next"; else export TAG="latest"; fi
+          npm publish --dry-run --tag ${TAG} --access public *.tgz
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          PRE_RELEASE: ${{ github.event.release.prerelease }}
+  release:
+    if: startsWith(github.event.ref, 'refs/tags/v')
+    needs: [release-dry-run]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: ipyvuedraggable-dist-${{ github.run_number }}
+
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "14.x"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          pip install twine wheel
+
+      - name: Publish the Python package
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: twine upload --skip-existing dist/*
+
+      - name: Publish the NPM package
+        run: |
+          cd js
+          echo $PRE_RELEASE
+          if [[ $PRE_RELEASE == "true" ]]; then export TAG="next"; else export TAG="latest"; fi
+          npm publish --tag ${TAG} --access public *.tgz
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          PRE_RELEASE: ${{ github.event.release.prerelease }}
